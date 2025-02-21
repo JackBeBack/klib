@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import klib.sample.composeapp.generated.resources.*
+import io.github.jackbeback.klib.composeapp.generated.resources.*
 import io.github.jackbeback.klib.theme.AppTheme
 import io.github.jackbeback.klib.theme.LocalThemeIsDark
 import kotlinx.coroutines.isActive
