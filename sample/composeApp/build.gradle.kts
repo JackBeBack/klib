@@ -1,6 +1,6 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -9,13 +9,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 kotlin {
     jvmToolchain(11)
     androidTarget {
-        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
     jvm()
@@ -122,6 +121,40 @@ compose.desktop {
                 iconFile.set(project.file("desktopAppIcons/MacosIcon.icns"))
                 bundleID = "io.github.jackbeback.klib.desktopApp"
             }
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates(group.toString(), "library", version.toString())
+
+    pom {
+        name = "klib"
+        description = "Collection of usefull KMP/CMP Functions"
+        inceptionYear = "2025"
+        url = "https://github.com/kotlin/multiplatform-library-template/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "jackbeback"
+                name = "JackBeBack"
+                url = "https://github.com/JackBeBack"
+            }
+        }
+        scm {
+            url = "https://github.com/JackBeBack/UIKit"
+            connection = "smc:git:git://github.com:JackBeBack/klib.git"
+            developerConnection = "scm:git:ssh://git@github.com:JackBeBack/klib.git"
         }
     }
 }
