@@ -1,0 +1,143 @@
+package io.github.jackbeback.klib.theme.icons.gentlecons
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.unit.dp
+
+val Gentlecons.Snow: ImageVector
+    get() {
+        if (_Snow != null) {
+            return _Snow!!
+        }
+        _Snow = ImageVector.Builder(
+            name = "Snow",
+            defaultWidth = 800.dp,
+            defaultHeight = 800.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(fill = SolidColor(Color(0xFF0F0F0F))) {
+                moveTo(13f, 2f)
+                curveTo(13f, 1.448f, 12.552f, 1f, 12f, 1f)
+                curveTo(11.448f, 1f, 11f, 1.448f, 11f, 2f)
+                verticalLineTo(2.586f)
+                lineTo(10.707f, 2.293f)
+                curveTo(10.317f, 1.902f, 9.683f, 1.902f, 9.293f, 2.293f)
+                curveTo(8.902f, 2.683f, 8.902f, 3.317f, 9.293f, 3.707f)
+                lineTo(11f, 5.414f)
+                verticalLineTo(9.586f)
+                lineTo(8.05f, 6.636f)
+                verticalLineTo(4.222f)
+                curveTo(8.05f, 3.67f, 7.603f, 3.222f, 7.05f, 3.222f)
+                curveTo(6.498f, 3.222f, 6.05f, 3.67f, 6.05f, 4.222f)
+                verticalLineTo(4.636f)
+                lineTo(5.636f, 4.222f)
+                curveTo(5.246f, 3.831f, 4.612f, 3.831f, 4.222f, 4.222f)
+                curveTo(3.831f, 4.612f, 3.831f, 5.246f, 4.222f, 5.636f)
+                lineTo(4.636f, 6.05f)
+                horizontalLineTo(4.222f)
+                curveTo(3.67f, 6.05f, 3.222f, 6.498f, 3.222f, 7.05f)
+                curveTo(3.222f, 7.603f, 3.67f, 8.05f, 4.222f, 8.05f)
+                horizontalLineTo(6.636f)
+                lineTo(9.586f, 11f)
+                horizontalLineTo(5.414f)
+                lineTo(3.707f, 9.293f)
+                curveTo(3.317f, 8.902f, 2.683f, 8.902f, 2.293f, 9.293f)
+                curveTo(1.902f, 9.683f, 1.902f, 10.317f, 2.293f, 10.707f)
+                lineTo(2.586f, 11f)
+                horizontalLineTo(2f)
+                curveTo(1.448f, 11f, 1f, 11.448f, 1f, 12f)
+                curveTo(1f, 12.552f, 1.448f, 13f, 2f, 13f)
+                horizontalLineTo(2.586f)
+                lineTo(2.293f, 13.293f)
+                curveTo(1.902f, 13.683f, 1.902f, 14.317f, 2.293f, 14.707f)
+                curveTo(2.683f, 15.098f, 3.317f, 15.098f, 3.707f, 14.707f)
+                lineTo(5.414f, 13f)
+                horizontalLineTo(9.586f)
+                lineTo(6.636f, 15.95f)
+                horizontalLineTo(4.222f)
+                curveTo(3.67f, 15.95f, 3.222f, 16.397f, 3.222f, 16.95f)
+                curveTo(3.222f, 17.502f, 3.67f, 17.95f, 4.222f, 17.95f)
+                horizontalLineTo(4.636f)
+                lineTo(4.222f, 18.364f)
+                curveTo(3.831f, 18.754f, 3.831f, 19.388f, 4.222f, 19.778f)
+                curveTo(4.612f, 20.169f, 5.245f, 20.169f, 5.636f, 19.778f)
+                lineTo(6.05f, 19.364f)
+                verticalLineTo(19.778f)
+                curveTo(6.05f, 20.33f, 6.498f, 20.778f, 7.05f, 20.778f)
+                curveTo(7.603f, 20.778f, 8.05f, 20.33f, 8.05f, 19.778f)
+                verticalLineTo(17.364f)
+                lineTo(11f, 14.414f)
+                verticalLineTo(18.586f)
+                lineTo(9.293f, 20.293f)
+                curveTo(8.902f, 20.683f, 8.902f, 21.317f, 9.293f, 21.707f)
+                curveTo(9.683f, 22.098f, 10.317f, 22.098f, 10.707f, 21.707f)
+                lineTo(11f, 21.414f)
+                verticalLineTo(22f)
+                curveTo(11f, 22.552f, 11.448f, 23f, 12f, 23f)
+                curveTo(12.552f, 23f, 13f, 22.552f, 13f, 22f)
+                verticalLineTo(21.414f)
+                lineTo(13.293f, 21.707f)
+                curveTo(13.683f, 22.098f, 14.317f, 22.098f, 14.707f, 21.707f)
+                curveTo(15.098f, 21.317f, 15.098f, 20.683f, 14.707f, 20.293f)
+                lineTo(13f, 18.586f)
+                verticalLineTo(14.414f)
+                lineTo(15.95f, 17.364f)
+                verticalLineTo(19.778f)
+                curveTo(15.95f, 20.33f, 16.397f, 20.778f, 16.95f, 20.778f)
+                curveTo(17.502f, 20.778f, 17.95f, 20.33f, 17.95f, 19.778f)
+                verticalLineTo(19.364f)
+                lineTo(18.364f, 19.778f)
+                curveTo(18.754f, 20.169f, 19.388f, 20.169f, 19.778f, 19.778f)
+                curveTo(20.169f, 19.388f, 20.169f, 18.754f, 19.778f, 18.364f)
+                lineTo(19.364f, 17.95f)
+                horizontalLineTo(19.778f)
+                curveTo(20.33f, 17.95f, 20.778f, 17.502f, 20.778f, 16.95f)
+                curveTo(20.778f, 16.397f, 20.33f, 15.95f, 19.778f, 15.95f)
+                horizontalLineTo(17.364f)
+                lineTo(14.414f, 13f)
+                horizontalLineTo(18.586f)
+                lineTo(20.293f, 14.707f)
+                curveTo(20.683f, 15.098f, 21.317f, 15.098f, 21.707f, 14.707f)
+                curveTo(22.098f, 14.317f, 22.098f, 13.683f, 21.707f, 13.293f)
+                lineTo(21.414f, 13f)
+                horizontalLineTo(22f)
+                curveTo(22.552f, 13f, 23f, 12.552f, 23f, 12f)
+                curveTo(23f, 11.448f, 22.552f, 11f, 22f, 11f)
+                horizontalLineTo(21.414f)
+                lineTo(21.707f, 10.707f)
+                curveTo(22.098f, 10.317f, 22.098f, 9.683f, 21.707f, 9.293f)
+                curveTo(21.317f, 8.902f, 20.683f, 8.902f, 20.293f, 9.293f)
+                lineTo(18.586f, 11f)
+                horizontalLineTo(14.414f)
+                lineTo(17.364f, 8.05f)
+                horizontalLineTo(19.778f)
+                curveTo(20.33f, 8.05f, 20.778f, 7.603f, 20.778f, 7.05f)
+                curveTo(20.778f, 6.498f, 20.33f, 6.05f, 19.778f, 6.05f)
+                horizontalLineTo(19.364f)
+                lineTo(19.778f, 5.636f)
+                curveTo(20.169f, 5.246f, 20.169f, 4.612f, 19.778f, 4.222f)
+                curveTo(19.388f, 3.831f, 18.754f, 3.831f, 18.364f, 4.222f)
+                lineTo(17.95f, 4.636f)
+                verticalLineTo(4.222f)
+                curveTo(17.95f, 3.67f, 17.502f, 3.222f, 16.95f, 3.222f)
+                curveTo(16.397f, 3.222f, 15.95f, 3.67f, 15.95f, 4.222f)
+                verticalLineTo(6.636f)
+                lineTo(13f, 9.586f)
+                verticalLineTo(5.414f)
+                lineTo(14.707f, 3.707f)
+                curveTo(15.098f, 3.317f, 15.098f, 2.683f, 14.707f, 2.293f)
+                curveTo(14.317f, 1.902f, 13.683f, 1.902f, 13.293f, 2.293f)
+                lineTo(13f, 2.586f)
+                verticalLineTo(2f)
+                close()
+            }
+        }.build()
+
+        return _Snow!!
+    }
+
+@Suppress("ObjectPropertyName")
+private var _Snow: ImageVector? = null

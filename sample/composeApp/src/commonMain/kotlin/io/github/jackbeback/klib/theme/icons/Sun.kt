@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 
 val Sun: ImageVector
     get() {
-        if (_Sun != null) {
-            return _Sun!!
+        if (_SunSvgrepoCom != null) {
+            return _SunSvgrepoCom!!
         }
-        _Sun = ImageVector.Builder(
-            name = "Sun",
+        _SunSvgrepoCom = ImageVector.Builder(
+            name = "SunSvgrepoCom",
             defaultWidth = 800.dp,
             defaultHeight = 800.dp,
             viewportWidth = 24f,
@@ -92,8 +92,8 @@ val Sun: ImageVector
             }
         }.build()
 
-        return _Sun!!
+        return _SunSvgrepoCom!!
     }
 
 @Suppress("ObjectPropertyName")
-private var _Sun: ImageVector? = null
+private var _SunSvgrepoCom: ImageVector? = null

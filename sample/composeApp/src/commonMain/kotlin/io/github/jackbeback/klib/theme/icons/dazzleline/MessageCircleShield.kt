@@ -1,0 +1,61 @@
+package io.github.jackbeback.klib.theme.icons.dazzleline
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.unit.dp
+
+val DazzleLine.MessageCircleShield: ImageVector
+    get() {
+        if (_MessageCircleShield != null) {
+            return _MessageCircleShield!!
+        }
+        _MessageCircleShield = ImageVector.Builder(
+            name = "MessageCircleShield",
+            defaultWidth = 800.dp,
+            defaultHeight = 800.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                stroke = SolidColor(Color(0xFF000000)),
+                strokeLineWidth = 2f,
+                strokeLineCap = StrokeCap.Round,
+                strokeLineJoin = StrokeJoin.Round
+            ) {
+                moveTo(21.004f, 12f)
+                curveTo(21.004f, 16.971f, 16.975f, 21f, 12.004f, 21f)
+                curveTo(9.967f, 21f, 3.005f, 21f, 3.005f, 21f)
+                curveTo(3.005f, 21f, 4.564f, 17.256f, 3.94f, 16.001f)
+                curveTo(3.341f, 14.796f, 3.004f, 13.437f, 3.004f, 12f)
+                curveTo(3.004f, 7.029f, 7.033f, 3f, 12.004f, 3f)
+                curveTo(16.975f, 3f, 21.004f, 7.029f, 21.004f, 12f)
+                close()
+            }
+            path(
+                stroke = SolidColor(Color(0xFF000000)),
+                strokeLineWidth = 2f,
+                strokeLineCap = StrokeCap.Round,
+                strokeLineJoin = StrokeJoin.Round
+            ) {
+                moveTo(15f, 10.167f)
+                curveTo(15f, 10.167f, 14.694f, 10.167f, 14.625f, 10.167f)
+                curveTo(13.601f, 10.167f, 12.708f, 9.752f, 12f, 9f)
+                curveTo(11.292f, 9.752f, 10.399f, 10.167f, 9.375f, 10.167f)
+                curveTo(9.306f, 10.167f, 9f, 10.167f, 9f, 10.167f)
+                curveTo(9f, 10.167f, 9f, 10.944f, 9f, 11.398f)
+                curveTo(9f, 13.612f, 10.275f, 15.472f, 12f, 16f)
+                curveTo(13.725f, 15.472f, 15f, 13.612f, 15f, 11.398f)
+                curveTo(15f, 10.944f, 15f, 10.167f, 15f, 10.167f)
+                close()
+            }
+        }.build()
+
+        return _MessageCircleShield!!
+    }
+
+@Suppress("ObjectPropertyName")
+private var _MessageCircleShield: ImageVector? = null
