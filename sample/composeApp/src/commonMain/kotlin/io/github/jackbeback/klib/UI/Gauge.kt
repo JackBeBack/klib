@@ -9,22 +9,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.unit.dp
 import kotlin.math.*
 
 data class GaugeSettings( // Settings to customize the appearance
-    val backgroundColor: Color = Color.LightGray,         // Background arc color
-    val progressColor: Color = Color(0xFF4CAF50),         // Foreground arc (progress) color
-    val needleColor: Color = Color.Black,                 // Needle color
-    val textColor: Color = Color.White,                   // Text color
+    val backgroundColor: Color,         // Background arc color
+    val progressColor: Color,         // Foreground arc (progress) color
+    val needleColor: Color,                 // Needle color
+    val textColor: Color,                   // Text color
     val strokeWidthFactor: Float = 0.1f,                  // Proportional stroke width (relative to size)
     val needleWidthFactor: Float = 0.4f                   // Proportional needle width (relative to stroke width)
 )
 
-// Default settings with reasonable values
-val DefaultGaugeSettings = GaugeSettings()
+@Composable
+fun DefaultGaugeSettings(): GaugeSettings = GaugeSettings(
+    backgroundColor = MaterialTheme.colorScheme.surface,         // Background arc color
+    progressColor = MaterialTheme.colorScheme.primary,              // Foreground arc (progress) color
+    needleColor = MaterialTheme.colorScheme.onBackground,           // Needle color
+    textColor = MaterialTheme.colorScheme.onBackground              // Text color
+)
 
 @Composable
 fun GaugeDisplay(
@@ -33,7 +39,7 @@ fun GaugeDisplay(
     modifier: Modifier = Modifier.size(400.dp),
     minValue: Float = 0f,
     maxValue: Float = 100f,
-    gaugeSettings: GaugeSettings = DefaultGaugeSettings // Use settings for customization
+    gaugeSettings: GaugeSettings = DefaultGaugeSettings() // Use settings for customization
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Gauge(
@@ -55,7 +61,7 @@ fun Gauge(
     value: Float,
     minValue: Float = 0f,
     maxValue: Float = 1f,
-    settings: GaugeSettings = DefaultGaugeSettings,
+    settings: GaugeSettings = DefaultGaugeSettings(),
     modifier: Modifier = Modifier
 ) {
     // Animate the incoming value

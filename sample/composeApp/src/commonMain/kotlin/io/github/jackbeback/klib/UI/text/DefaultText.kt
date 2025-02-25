@@ -94,7 +94,7 @@ fun DefaultText(
     onClick: (() -> Unit)? = null
 ) {
     // Merge text style with disabled opacity if needed.
-    val style = textStyle.merge(color = textStyle.color.addOpacityIf { !isEnabled })
+    val style = textStyle.merge(color = colorScheme.onSurface.addOpacityIf { !isEnabled })
 
     // Arrange text and optional icon using our custom layout.
     AppTextLayout(
@@ -274,7 +274,7 @@ private fun AppTextLayout(
 }
 
 @Composable
-fun AppTextSample() {
+fun TextSample() {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -284,7 +284,7 @@ fun AppTextSample() {
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         // Short text
-        DefaultText(text = "Short text")
+        DefaultText(text = "Short text", textStyle = typography.titleLarge)
 
         // Long text
         DefaultText(text = "Long text ".repeat(40))
@@ -293,26 +293,27 @@ fun AppTextSample() {
         DefaultText(
             text = "Max 3 lines text. ".repeat(40),
             overflow = TextOverflow.Ellipsis,
+            textStyle = typography.titleLarge,
             maxLines = 3
         )
 
         // Linked text with clickable URL
         DefaultText(
-            text = "Linked Text: https://release.share-platform.de/login",
+            text = "Linked Text: https://www.google.com",
             isLinkEnabled = true,
             onClick = { log.i("AppText Click - Linked Text") }
         )
 
         // Linked text without explicit https
         DefaultText(
-            text = "Linked Text without https: release.share-platform.de/login",
+            text = "Linked Text without https: www.google.com",
             isLinkEnabled = true,
             onClick = { log.i("AppText Click - Linked Text without https") }
         )
 
         // Disabled linked text
         DefaultText(
-            text = "Disabled linked Text: https://release.share-platform.de/login",
+            text = "Disabled linked Text: www.google.com",
             isEnabled = false,
             isLinkEnabled = true,
             onClick = { log.i("AppText Click - Disabled linked Text") }
