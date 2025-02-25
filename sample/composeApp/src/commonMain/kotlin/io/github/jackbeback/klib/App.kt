@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.jackbeback.klib.UI.GaugeDisplay
 import io.github.jackbeback.klib.UI.sample.ToggleSwitch
+import io.github.jackbeback.klib.UI.snackbar.CustomSnackbarSample
 import io.github.jackbeback.klib.UI.text.TextSample
 import io.github.jackbeback.klib.UI.textfield.OutlinedTextFieldSample
 import io.github.jackbeback.klib.Utility.log
@@ -69,6 +70,7 @@ enum class UIComponents {
     GAUGE,
     TEXT,
     TEXTFIELD,
+    SNACKBAR
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
@@ -84,5 +86,8 @@ val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
     },
     UIComponents.TEXTFIELD to {
         OutlinedTextFieldSample()
+    },
+    UIComponents.SNACKBAR to {
+        CustomSnackbarSample()
     }
 )
