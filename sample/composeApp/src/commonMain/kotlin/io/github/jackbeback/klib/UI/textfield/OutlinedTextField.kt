@@ -153,14 +153,6 @@ private fun OutlinedTextFieldContainer(
     }
 }
 
-/**
- * This is a test simple sample of [ShareOutlinedTextField].
- * @param modifier the [Modifier] to be applied to this [ShareOutlinedTextFieldSimpleSample]
- * @param text the input text to be shown in this [ShareOutlinedTextFieldSimpleSample].
- * @param enabled controls the enabled state of this. When `false`, this component will
- * not respond to user click, and it will appear visually disabled and disabled to accessibility
- * services.
- */
 @Composable
 fun OutlinedTextFieldSimpleSample(
     modifier: Modifier = Modifier,

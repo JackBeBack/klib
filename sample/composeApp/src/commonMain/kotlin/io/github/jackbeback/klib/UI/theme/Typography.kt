@@ -5,10 +5,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/**
- * AppTypography defines our design system's typography styles.
- * We've removed any "Share" references for a cleaner, generic look.
- */
 class DefaultTypography(
     // Style for a page title
     val pageTitle: TextStyle = TextStyle(

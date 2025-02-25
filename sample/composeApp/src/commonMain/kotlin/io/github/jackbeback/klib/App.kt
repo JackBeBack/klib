@@ -2,10 +2,7 @@ package io.github.jackbeback.klib
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -13,27 +10,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.jackbeback.klib.UI.GaugeDisplay
-import io.github.jackbeback.klib.UI.sample.ToggleSwitch
+import io.github.jackbeback.klib.UI.button.*
 import io.github.jackbeback.klib.UI.snackbar.CustomSnackbarSample
 import io.github.jackbeback.klib.UI.text.TextSample
 import io.github.jackbeback.klib.UI.textfield.OutlinedTextFieldSample
-import io.github.jackbeback.klib.Utility.log
 import io.github.jackbeback.klib.theme.AppTheme
 import io.github.jackbeback.klib.theme.LocalThemeIsDark
+import io.github.jackbeback.klib.theme.icons.Moon
+import io.github.jackbeback.klib.theme.icons.Sun
 
 @Composable
 internal fun App() = AppTheme {
     var isDark by LocalThemeIsDark.current
     Box(modifier = Modifier.fillMaxSize()) {
         UICatalog()
-        Button(onClick = {
+        SmallFloatingActionButton(modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            icon = if (isDark) Moon else Sun){
             isDark = !isDark
-            log.i("Theme is now -> isDark = $isDark")
-        }, modifier = Modifier.align(Alignment.BottomEnd)) {
-            Text("isDark = $isDark")
         }
     }
 }
@@ -55,7 +50,7 @@ fun UICatalog() {
             }
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize().background(Color.White), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
 
             currentSelection?.second?.invoke()
             Button(onClick = { currentSelection = null }, modifier = Modifier.align(Alignment.TopStart)) {
@@ -70,7 +65,8 @@ enum class UIComponents {
     GAUGE,
     TEXT,
     TEXTFIELD,
-    SNACKBAR
+    SNACKBAR,
+    BUTTONS
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
@@ -89,5 +85,14 @@ val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
     },
     UIComponents.SNACKBAR to {
         CustomSnackbarSample()
+    },
+    UIComponents.BUTTONS to {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            FilledButtonSample()
+            SampleIconButton()
+            OutlinedButtonWithIconSample()
+            SegmentedControlSample()
+            ActionButtonsSample()
+        }
     }
 )
