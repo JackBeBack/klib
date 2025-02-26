@@ -12,7 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.jackbeback.klib.UI.GaugeDisplay
+import io.github.jackbeback.klib.UI.avatar.AvatarSample
+import io.github.jackbeback.klib.UI.badge.AppPillBadgeSample
 import io.github.jackbeback.klib.UI.button.*
+import io.github.jackbeback.klib.UI.chips.ChipSample
 import io.github.jackbeback.klib.UI.snackbar.CustomSnackbarSample
 import io.github.jackbeback.klib.UI.text.TextSample
 import io.github.jackbeback.klib.UI.textfield.OutlinedTextFieldSample
@@ -66,7 +69,10 @@ enum class UIComponents {
     TEXT,
     TEXTFIELD,
     SNACKBAR,
-    BUTTONS
+    BUTTONS,
+    AVATAR,
+    BADGE,
+    CHIP
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
@@ -94,5 +100,18 @@ val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
             SegmentedControlSample()
             ActionButtonsSample()
         }
+    },
+    UIComponents.AVATAR to {
+        AvatarSample()
+    },
+    UIComponents.BADGE to {
+        AppPillBadgeSample()
+    },
+    UIComponents.CHIP to {
+        Column {
+            AppPillBadgeSample()
+            ChipSample()
+        }
+
     }
 )

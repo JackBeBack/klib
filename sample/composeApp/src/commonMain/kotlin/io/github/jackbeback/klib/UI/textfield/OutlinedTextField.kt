@@ -3,6 +3,7 @@ package io.github.jackbeback.klib.UI.textfield
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
@@ -22,8 +23,17 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.jackbeback.klib.theme.icons.Visibility
+import io.github.jackbeback.klib.theme.icons.VisibilityOff
+import io.github.jackbeback.klib.theme.icons.dazzleline.AddressBook
+import io.github.jackbeback.klib.theme.icons.dazzleline.ClipboardText
+import io.github.jackbeback.klib.theme.icons.dazzleline.ClockLines
+import io.github.jackbeback.klib.theme.icons.dazzleline.DazzleLine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -53,9 +63,12 @@ fun OutlinedTextField(
     isError: Boolean = false,
     singleLine: Boolean = true,
     readOnly: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    leadingIcon: ImageVector? = null,
+    leadIconOnClick: (() -> Unit)? = null,
+    trailingIcon: ImageVector? = null,
+    trailingIconOnClick: (() -> Unit)? = null,
     errorText: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     focusRequester: FocusRequester = remember { FocusRequester() }
 ) {
@@ -81,6 +94,7 @@ fun OutlinedTextField(
         enabled = enabled,
         readOnly = readOnly,
         singleLine = singleLine,
+        visualTransformation = visualTransformation,
         textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
         cursorBrush = SolidColor(
             if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
@@ -91,7 +105,9 @@ fun OutlinedTextField(
                 isError = isError,
                 placeholder = placeholder,
                 leadingIcon = leadingIcon,
+                leadingIconOnClick = leadIconOnClick,
                 trailingIcon = trailingIcon,
+                trailingIconOnClick = trailingIconOnClick,
                 errorText = errorText
             )
         }
@@ -105,12 +121,14 @@ private fun OutlinedTextFieldContainer(
     placeholder: String?,
     cornerRadius: Dp = 8.dp,
     borderThickness: Dp = 1.dp,
-    leadingIcon: @Composable (() -> Unit)?,
-    trailingIcon: @Composable (() -> Unit)?,
+    leadingIcon: ImageVector?,
+    leadingIconOnClick: (() -> Unit)?,
+    trailingIcon: ImageVector?,
+    trailingIconOnClick: (() -> Unit)?,
     errorText: String?
 ) {
     val borderColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline
-    Column{
+    Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -122,7 +140,14 @@ private fun OutlinedTextFieldContainer(
         ) {
             // Leading Icon (if available)
             if (leadingIcon != null) {
-                Box(Modifier.padding(end = 8.dp)) { leadingIcon() }
+                Box(Modifier.padding(end = 8.dp)) {
+                    Icon(
+                        leadingIcon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(18.dp).clickable { leadingIconOnClick?.invoke() }
+                    )
+                }
             }
             // Placeholder or text input
             Box(modifier = Modifier.weight(1f)) {
@@ -137,7 +162,14 @@ private fun OutlinedTextFieldContainer(
             }
             // Trailing Icon (if available)
             if (trailingIcon != null) {
-                Box(Modifier.padding(start = 8.dp)) { trailingIcon() }
+                Box(Modifier.padding(start = 8.dp)) {
+                    Icon(
+                        trailingIcon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(18.dp).clickable { trailingIconOnClick?.invoke() }
+                    )
+                }
             }
         }
 
@@ -154,42 +186,79 @@ private fun OutlinedTextFieldContainer(
 }
 
 @Composable
-fun OutlinedTextFieldSimpleSample(
+fun PasswordOutlinedTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    t: String = "test text",
     enabled: Boolean = true,
+    placeholder: String? = null,
+    isError: Boolean = false,
+    singleLine: Boolean = true,
+    readOnly: Boolean = false,
+    leadingIcon: ImageVector? = null,
+    errorText: String? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    focusRequester: FocusRequester = remember { FocusRequester() }
 ) {
-    var isError by rememberSaveable { mutableStateOf(false) }
-    val textMaxLength = 50
-    var text by rememberSaveable { mutableStateOf(t) }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = text,
-        onValueChange = { value ->
-            //This is for Error Testing: The error will be shown when Text is longer than 10
-            isError = value.length > textMaxLength
-            text = value
-        },
-        trailingIcon = {Icon(Icons.Filled.Info, contentDescription = "Info")},
-        leadingIcon = {Icon(Icons.Filled.Info, contentDescription = "Info")},
-        singleLine = false,
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
-        errorText = "Error Testing: Error Mark will be shown when Text is longer than $textMaxLength",
-        isError = isError,
         enabled = enabled,
+        placeholder = placeholder,
+        isError = isError,
+        singleLine = singleLine,
+        readOnly = readOnly,
+        leadingIcon = leadingIcon,
+        trailingIcon = if (passwordVisible) Visibility else VisibilityOff,
+        trailingIconOnClick = { passwordVisible = !passwordVisible },
+        errorText = errorText,
+        interactionSource = interactionSource,
+        focusRequester = focusRequester,
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
     )
 }
 
+
 @Composable
 fun OutlinedTextFieldSample() {
+    var text1 by rememberSaveable { mutableStateOf("") }
+    var text2 by rememberSaveable { mutableStateOf("") }
+
+    var isError by rememberSaveable { mutableStateOf(false) }
+
+    val maxTextLength = 10
+
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-        OutlinedTextFieldSimpleSample(
-            modifier = Modifier.padding(20.dp),
+        OutlinedTextField(
+            value = text1,
+            onValueChange = { value ->
+                //This is for Error Testing: The error will be shown when Text is longer than 10
+                isError = value.length > maxTextLength
+                text1 = value
+            },
+            trailingIcon = DazzleLine.AddressBook,
+            leadingIcon = null,
+            singleLine = false,
+            modifier = Modifier,
+            errorText = "Error Testing: Error Mark will be shown when Text is longer than $maxTextLength",
+            isError = isError,
             enabled = true,
         )
 
-        OutlinedTextFieldSimpleSample(
-            modifier = Modifier.padding(20.dp).height(300.dp),
+        PasswordOutlinedTextField(
+            value = text2,
+            onValueChange = { value ->
+                //This is for Error Testing: The error will be shown when Text is longer than 10
+                isError = value.length > maxTextLength
+                text2 = value
+            },
+            singleLine = false,
+            modifier = Modifier,
+            errorText = "Error Testing: Error Mark will be shown when Text is longer than $maxTextLength",
+            isError = isError,
             enabled = true,
         )
     }
