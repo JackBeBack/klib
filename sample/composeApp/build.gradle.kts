@@ -6,6 +6,7 @@ group = "io.github.jackbeback.klib"
 version = "1.0.0"
 
 plugins {
+    signing
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
@@ -104,6 +105,19 @@ dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
 }
+
+// Define the file path to your secret key
+val signingKeyFilePath = project.findProperty("signing.keyFile") as String?
+val localSigningPassword = project.findProperty("signing.password") as String?
+
+val localSigningKey = signingKeyFilePath?.let { File(it).readText(Charsets.UTF_8) }
+
+signing {
+    useInMemoryPgpKeys(localSigningKey, localSigningPassword)
+    sign(publishing.publications)
+}
+
+
 
 compose.desktop {
     application {
