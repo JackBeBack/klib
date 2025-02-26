@@ -112,12 +112,6 @@ val localSigningPassword = project.findProperty("signing.password") as String?
 
 val localSigningKey = signingKeyFilePath?.let { File(it).readText(Charsets.UTF_8) }
 
-signing {
-    useInMemoryPgpKeys(localSigningKey, localSigningPassword)
-    sign(publishing.publications)
-}
-
-
 
 compose.desktop {
     application {
