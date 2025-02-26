@@ -3,7 +3,7 @@ import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 group = "io.github.jackbeback.klib"
-version = "1.0.0"
+version = "1.0.2"
 
 plugins {
     signing
@@ -94,7 +94,7 @@ android {
 
         applicationId = "io.github.jackbeback.klib.androidApp"
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "$version"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -126,7 +126,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Klib"
-            packageVersion = "1.0.2"
+            packageVersion = "$version"
 
             linux {
                 iconFile.set(project.file("desktopAppIcons/LinuxIcon.png"))
