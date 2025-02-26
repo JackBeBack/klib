@@ -4,6 +4,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 group = "io.github.jackbeback.klib"
 version = "1.0.2"
+val signLocally = false
 
 plugins {
     signing
@@ -106,11 +107,19 @@ dependencies {
     debugImplementation(libs.androidx.uitest.testManifest)
 }
 
-// Define the file path to your secret key
-val signingKeyFilePath = project.findProperty("signing.keyFile") as String?
-val localSigningPassword = project.findProperty("signing.password") as String?
+if (signLocally){
+    // Define the file path to your secret key
+    val signingKeyFilePath = project.findProperty("signing.keyFile") as String?
+    val localSigningPassword = project.findProperty("signing.password") as String?
 
-val localSigningKey = signingKeyFilePath?.let { File(it).readText(Charsets.UTF_8) }
+    val localSigningKey = signingKeyFilePath?.let { File(it).readText(Charsets.UTF_8) }
+
+    signing {
+        useInMemoryPgpKeys(localSigningKey, localSigningPassword)
+        sign(publishing.publications)
+    }
+
+}
 
 
 compose.desktop {
