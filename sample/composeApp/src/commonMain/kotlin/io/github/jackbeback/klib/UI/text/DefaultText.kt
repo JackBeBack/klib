@@ -223,10 +223,10 @@ object TextDefaults {
         isEnabled: Boolean = true,
         overflow: TextOverflow = TextOverflow.Clip,
         maxLines: Int = Int.MAX_VALUE,
-        textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+        textStyle: TextStyle = typography.bodyMedium
     ): TextProperties {
         val contentColor = if (textStyle.color == Color.Unspecified) {
-            MaterialTheme.colorScheme.onSurface
+            colorScheme.onSurface
         } else {
             textStyle.color
         }

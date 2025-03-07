@@ -162,6 +162,7 @@ fun IconButton(
     disabledIconColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
     disabledIconContainerColor: Color = Color.Transparent,
     iconSize: Dp = 24.dp,
+    containerSize: Dp = 48.dp,
     isTextVisible: Boolean = true,
     text: String = "",
     textColor: Color = MaterialTheme.colorScheme.onBackground,
@@ -169,7 +170,7 @@ fun IconButton(
     onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier.clickable(enabled = enabled, onClick = onClick),
+        modifier = modifier.clickable(enabled = enabled, onClick = onClick).width(containerSize),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

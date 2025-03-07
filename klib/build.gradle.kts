@@ -50,6 +50,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.kstore)
             implementation(libs.composeIcons.featherIcons)
+            implementation(libs.webview)
+            implementation(libs.datetime)
             implementation(project(":klib"))
         }
 

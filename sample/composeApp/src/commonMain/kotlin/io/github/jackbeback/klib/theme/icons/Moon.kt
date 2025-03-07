@@ -12,7 +12,7 @@ val Moon: ImageVector
             return _MoonStarsSvgrepoCom!!
         }
         _MoonStarsSvgrepoCom = ImageVector.Builder(
-            name = "MoonStarsSvgrepoCom",
+            name = "MoonStarsSvgreoCom",
             defaultWidth = 800.dp,
             defaultHeight = 800.dp,
             viewportWidth = 24f,
