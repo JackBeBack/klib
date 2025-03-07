@@ -3,7 +3,7 @@ import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 group = "io.github.jackbeback.klib"
-version = "1.0.2"
+version = "1.0.3"
 val signLocally = false
 
 plugins {
