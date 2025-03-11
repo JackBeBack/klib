@@ -27,6 +27,7 @@ import io.github.jackbeback.klib.UI.snackbar.CustomSnackbarSample
 import io.github.jackbeback.klib.UI.text.TextSample
 import io.github.jackbeback.klib.UI.textfield.OutlinedTextFieldSample
 import io.github.jackbeback.klib.UI.webview.WebviewSample
+import io.github.jackbeback.klib.`fun`.Neat
 import io.github.jackbeback.klib.theme.AppTheme
 import io.github.jackbeback.klib.theme.LocalThemeIsDark
 import io.github.jackbeback.klib.theme.icons.Moon
@@ -48,7 +49,7 @@ internal fun App() = AppTheme {
 
 @Composable
 fun UICatalog() {
-    var currentSelection by remember { mutableStateOf<Pair<UIComponents, @Composable () -> Unit>?>(null) }
+    var currentSelection by remember { mutableStateOf<Pair<UIComponents, @Composable () -> Unit>?>(UIComponents.NEAT to {Neat()}) }
 
     if (currentSelection == null) {
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -93,7 +94,8 @@ enum class UIComponents {
     INLINEEDIT,
     BOTTOMSHEET,
     WEBVIEW,
-    BOTTOMNAVIGATION
+    BOTTOMNAVIGATION,
+    NEAT
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
@@ -151,5 +153,6 @@ val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
     },
     UIComponents.BOTTOMNAVIGATION to {
         BottomNavigationBarSample()
-    }
+    },
+    UIComponents.NEAT to {Neat()}
 )
