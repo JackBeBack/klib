@@ -13,12 +13,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.jackbeback.klib.Auth.SsoSample
 import io.github.jackbeback.klib.UI.GaugeDisplay
 import io.github.jackbeback.klib.UI.searchbar.SearchBarSample
 import io.github.jackbeback.klib.UI.avatar.AvatarSample
 import io.github.jackbeback.klib.UI.badge.AppPillBadgeSample
 import io.github.jackbeback.klib.UI.button.*
 import io.github.jackbeback.klib.UI.chips.ChipSample
+import io.github.jackbeback.klib.UI.counter.SampleCounter
 import io.github.jackbeback.klib.UI.inlineedit.InlineEditTextAreaSample
 import io.github.jackbeback.klib.UI.inlineedit.InlineEditTextSample
 import io.github.jackbeback.klib.UI.navigationbar.BottomNavigationBarSample
@@ -95,10 +97,18 @@ enum class UIComponents {
     BOTTOMSHEET,
     WEBVIEW,
     BOTTOMNAVIGATION,
-    NEAT
+    NEAT,
+    SSO,
+    COUNTER
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
+    UIComponents.COUNTER to {
+        SampleCounter()
+    },
+    UIComponents.SSO to {
+        SsoSample()
+    },
     UIComponents.NEAT to {
         Neat()
     },
