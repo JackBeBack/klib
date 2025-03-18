@@ -17,6 +17,8 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
 }
 
+
+
 kotlin {
     jvmToolchain(11)
     androidTarget {
@@ -58,6 +60,9 @@ kotlin {
             implementation(libs.composeIcons.featherIcons)
             implementation(libs.webview)
             implementation(libs.datetime)
+            implementation(libs.kmp.auth.google)
+            implementation(libs.kmp.auth.firebase)
+            implementation(libs.kmp.auth.uihelper)
         }
 
         commonTest.dependencies {
