@@ -27,6 +27,7 @@ import io.github.jackbeback.klib.UI.snackbar.CustomSnackbarSample
 import io.github.jackbeback.klib.UI.text.TextSample
 import io.github.jackbeback.klib.UI.textfield.OutlinedTextFieldSample
 import io.github.jackbeback.klib.UI.webview.WebviewSample
+import io.github.jackbeback.klib.`fun`.Neat
 import io.github.jackbeback.klib.theme.AppTheme
 import io.github.jackbeback.klib.theme.LocalThemeIsDark
 import io.github.jackbeback.klib.theme.icons.Moon
@@ -48,7 +49,7 @@ internal fun App() = AppTheme {
 
 @Composable
 fun UICatalog() {
-    var currentSelection by remember { mutableStateOf<Pair<UIComponents, @Composable () -> Unit>?>(null) }
+    var currentSelection by remember { mutableStateOf<Pair<UIComponents, @Composable () -> Unit>?>(Catalog.keys.first() to Catalog.values.first()) }
 
     if (currentSelection == null) {
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -93,10 +94,14 @@ enum class UIComponents {
     INLINEEDIT,
     BOTTOMSHEET,
     WEBVIEW,
-    BOTTOMNAVIGATION
+    BOTTOMNAVIGATION,
+    NEAT
 }
 
 val Catalog: Map<UIComponents, @Composable () -> Unit> = mapOf(
+    UIComponents.NEAT to {
+        Neat()
+    },
     UIComponents.GAUGE to {
         var value by remember { mutableStateOf(0f) }
         GaugeDisplay(value = value)
