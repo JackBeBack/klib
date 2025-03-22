@@ -53,8 +53,8 @@ fun AutoScalePlotView(modifier: Modifier, props: PlotProperties, data: List<Offs
     val p by derivedStateOf {
         props.copy(
             scale = Offset(
-                (canvasSize.value.width-props.padding*2) / props.window.getRange().x,
-                (canvasSize.value.height-props.padding*2) / props.window.getRange().y
+                (canvasSize.value.width-props.padding*2) / props.window.getSize().width,
+                (canvasSize.value.height-props.padding*2) / props.window.getSize().height
             )
         )
     }
@@ -73,7 +73,7 @@ fun AutoScalePlotView(modifier: Modifier, props: PlotProperties, data: List<Offs
 
 private fun DrawScope.drawDataPoint(props: PlotProperties, points: List<Offset>, scale: Float = 1f) {
     val size = 10f / scale
-    val data = points.map { it.copy(it.x * props.scale.x, it.y * props.scale.y) }
+    val data = points.map { it.copy((it.x - props.window.minValues.x) * props.scale.x, (it.y - props.window.minValues.y) * props.scale.y) }
     data.forEach {
         when (props.pointType) {
             PointType.CIRCLE -> drawCircle(props.dataColor, center = it.copy(y = -it.y), radius = size)
@@ -126,10 +126,10 @@ private fun DrawScope.translate(props: PlotProperties, content: DrawScope.() -> 
 }
 
 private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer) {
-    var xStart = props.window.minValues.x
-    var xEnd = props.window.maxValues.x * props.scale.x
-    var yStart = -props.window.minValues.y
-    var yEnd = -props.window.maxValues.y * props.scale.y
+    var xStart = 0f
+    var xEnd = props.window.getSize().width * props.scale.x
+    var yStart = 0f
+    var yEnd = -props.window.getSize().height * props.scale.y
 
     when (props.quadrant) {
         PlotQuadrant.ALL -> {
@@ -180,15 +180,15 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
-                start = Offset(x = xStart, y = yStart + props.axisStrokeWidth / 2f),
-                end = Offset(x = xStart, y = yEnd)
+                start = Offset.Zero.copy(y = yStart + props.axisStrokeWidth / 2f),
+                end = Offset.Zero.copy(y = yEnd)
             )
             //X axis
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
-                start = Offset(x = xStart, y = yStart),
-                end = Offset(x = xEnd, y = yStart)
+                start = Offset.Zero.copy(x = xStart),
+                end = Offset.Zero.copy(x = xEnd)
             )
             if (props.drawAxisArrow) {
                 // X Arrow
@@ -232,7 +232,7 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
                 end = Offset(x.toFloat() * props.scale.x, yEnd)
             )
         }
-        for (y in props.tickSteps.height.toInt()..-props.window.minValues.y.toInt() step props.tickSteps.height.toInt()) {
+        for (y in 0 downTo -props.window.maxValues.y.toInt() step props.tickSteps.height.toInt()) {
             drawLine(
                 color = props.axisColor.copy(alpha = 0.1f),
                 strokeWidth = props.axisStrokeWidth,
@@ -241,7 +241,7 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
                 end = Offset(xEnd, y.toFloat() * props.scale.y)
             )
         }
-        for (y in 0 downTo -props.window.maxValues.y.toInt() step props.tickSteps.height.toInt()) {
+        for (y in 0..props.window.minValues.y.toInt() step props.tickSteps.height.toInt()) {
             drawLine(
                 color = props.axisColor.copy(alpha = 0.1f),
                 strokeWidth = props.axisStrokeWidth,
@@ -252,7 +252,9 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
         }
     }
     if (props.drawTicks) {
-        for (x in (if (props.quadrant == PlotQuadrant.ALL) props.tickSteps.width.toInt() else 0)..props.window.maxValues.x.toInt() step props.tickSteps.width.toInt()) {
+        // X Positive Direction
+        for (x in (if (props.quadrant == PlotQuadrant.ALL) props.tickSteps.width.toInt() else 0)..xEnd.toInt() step props.tickSteps.width.toInt()) {
+            val realX = x + props.window.minValues.x.toInt()
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
@@ -262,15 +264,18 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
 
             drawText(
                 textMeasurer = textMeasurer,
-                text = x.toString(),
+                text = realX.toString(),
                 topLeft = Offset(
-                    (x.toFloat() * props.scale.x - textMeasurer.measure(x.toString()).size.height / 2f),
+                    (x.toFloat() * props.scale.x - textMeasurer.measure(realX.toString()).size.width / 2f),
                     10f
-                )
+                ),
+                size = Size(100f, 100f)
             )
 
         }
-        for (x in -props.tickSteps.width.toInt() downTo props.window.minValues.x.toInt() step props.tickSteps.width.toInt()) {
+        // X Negative Direction
+        for (x in -props.tickSteps.width.toInt() downTo xStart.toInt() step props.tickSteps.width.toInt()) {
+            val realX = x + props.window.minValues.x.toInt()
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
@@ -279,13 +284,15 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
             )
             drawText(
                 textMeasurer = textMeasurer,
-                text = x.toString(),
+                text = realX.toString(),
                 topLeft = Offset(
-                    (x.toFloat() * props.scale.x - textMeasurer.measure(x.toString()).size.height / 2f), 10f
+                    (x.toFloat() * props.scale.x - textMeasurer.measure(realX.toString()).size.height / 2f), 10f
                 )
             )
         }
-        for (y in -props.tickSteps.height.toInt() downTo -props.window.maxValues.y.toInt() step props.tickSteps.height.toInt()) {
+        // Y Positive Direction
+        for (y in 0 downTo -props.window.getSize().height.toInt() step props.tickSteps.height.toInt()) {
+            val realY = y - props.window.minValues.y.toInt()
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
@@ -295,14 +302,16 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
             drawText(
                 textMeasurer = textMeasurer,
                 style = TextStyle(color = props.axisColor),
-                text = (y * -1).toString(),
+                text = (realY * -1).toString(),
                 topLeft = Offset(
-                    (-textMeasurer.measure((y * -1).toString()).size.width.toFloat() - 10f),
-                    (y.toFloat() * props.scale.y - textMeasurer.measure((y * -1).toString()).size.height.toFloat() / 2)
+                    (-textMeasurer.measure((realY * -1).toString()).size.width.toFloat() - 10f),
+                    (y.toFloat() * props.scale.y - textMeasurer.measure((realY * -1).toString()).size.height.toFloat() / 2)
                 )
             )
         }
-        for (y in props.tickSteps.height.toInt()..-props.window.minValues.y.toInt() step props.tickSteps.height.toInt()) {
+        // Y Negative Direction
+        for (y in 0..props.window.minValues.y.toInt() step props.tickSteps.height.toInt()) {
+            val realY = y - props.window.minValues.y.toInt()
             drawLine(
                 color = props.axisColor,
                 strokeWidth = props.axisStrokeWidth,
@@ -312,10 +321,10 @@ private fun DrawScope.drawAxis(props: PlotProperties, textMeasurer: TextMeasurer
             drawText(
                 textMeasurer = textMeasurer,
                 style = TextStyle(color = props.axisColor),
-                text = (y * -1).toString(),
+                text = (realY * -1).toString(),
                 topLeft = Offset(
-                    (-textMeasurer.measure((y * -1).toString()).size.width.toFloat() - 10f),
-                    (y.toFloat() * props.scale.y - textMeasurer.measure((y * -1).toString()).size.height.toFloat() / 2)
+                    (-textMeasurer.measure((realY * -1).toString()).size.width.toFloat() - 10f),
+                    (y.toFloat() * props.scale.y - textMeasurer.measure((realY * -1).toString()).size.height.toFloat() / 2)
                 )
             )
         }
@@ -358,20 +367,23 @@ fun OvertimePlot(modifier: Modifier = Modifier, data: List<Float>, timeStep: Flo
 }
 
 data class PlotWindow(
-    val minValues: Offset = Offset(10f, 10f),
+    val minValues: Offset = Offset(100f, -100f),
     val maxValues: Offset = Offset(400f, 400f),
 )
 
-fun PlotWindow.getRange(): Offset {
-    return Offset(x = abs(maxValues.x - minValues.x), y = abs(maxValues.y - minValues.y))
+fun PlotWindow.getSize(): Size {
+    return Size(width = abs(maxValues.x - minValues.x), height = abs(maxValues.y - minValues.y))
 }
 
 @Composable
 fun PlotSample() {
-    var data by remember { mutableStateOf(listOf<Offset>()) }
+    var data by remember { mutableStateOf(listOf<Offset>(
+        Offset(100f, -100f),
+        Offset(400f, 400f)
+    )) }
     LaunchedEffect(Unit) {
-        while (true) {
-            data = data.plus(Offset(x = (0..400).random().toFloat(), y = (0..400).random().toFloat()))
+        while (false) {
+            data = data.plus(Offset(x = (100..400).random().toFloat(), y = (-100..400).random().toFloat()))
             delay(1000)
         }
     }
