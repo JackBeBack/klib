@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -88,8 +89,12 @@ fun <T> SearchBar(
         }else if (searchResults.isEmpty()) {
             DefaultText(text = "No results", Modifier)
         } else {
-            searchResults.take(maxResults).forEach {
-                listItem(it)
+            LazyColumn {
+                searchResults.take(if (query.isBlank()) searchResults.size else maxResults).forEach {
+                    item {
+                        listItem(it)
+                    }
+                }
             }
         }
     }

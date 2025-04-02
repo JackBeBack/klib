@@ -367,12 +367,16 @@ fun OvertimePlot(modifier: Modifier = Modifier, data: List<Float>, timeStep: Flo
 }
 
 data class PlotWindow(
-    val minValues: Offset = Offset(100f, -100f),
+    val minValues: Offset = Offset(0f, 0f),
     val maxValues: Offset = Offset(400f, 400f),
 )
 
 fun PlotWindow.getSize(): Size {
     return Size(width = abs(maxValues.x - minValues.x), height = abs(maxValues.y - minValues.y))
+}
+
+fun PlotWindow.contains(pos: Offset): Boolean {
+    return pos.x in minValues.x..maxValues.x && pos.y in minValues.y..maxValues.y
 }
 
 @Composable
